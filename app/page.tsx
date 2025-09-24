@@ -1,66 +1,87 @@
 "use client";
-import { useState } from "react";
+import { useState, FormEvent } from "react";
+
+type RegData = {
+  username: string;
+  email: string;
+  password: string;
+};
 
 export default function Home() {
-  const [items, setItems] = useState<{ id: number; text: string; rank: number }[]>([]);
-  const [text, setText] = useState("");
-  const [rank, setRank] = useState(3);
+  const [form, setForm] = useState<RegData>({
+    username: "",
+    email: "",
+    password: ""
+  });
+  const [submitted, setSubmitted] = useState<RegData | null>(null);
 
-  function addItem() {
-    const t = text.trim();
-    if (t === "") return;
-    const next = [...items, { id: Date.now(), text: t, rank }];
-    next.sort((a, b) => b.rank - a.rank); // show higher rank first
-    setItems(next);
-    setText("");
-    setRank(3);
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
   }
 
-  function doneItem(id: number) {
-    setItems(items.filter(x => x.id !== id));
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    console.log("REGISTER DATA:", form); 
+    setSubmitted(form); // to show it on screen
   }
 
   return (
-    <main className="min-h-screen p-4 max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Simple to do List</h1>
+    <main className="min-h-screen p-4 max-w-md mx-auto">
+      <h1 className="text-2xl font-bold mb-4">User Registration</h1>
 
-      <div className="flex gap-2 mb-4">
-        <input
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Enter a task"
-          className="flex-1 border rounded px-3 py-2"
-        />
-        <select
-          value={rank}
-          onChange={(e) => setRank(parseInt(e.target.value))}
-          className="border rounded px-2 py-2"
-        >
-          <option value={5}>Rank 5 (High)</option>
-          <option value={4}>Rank 4</option>
-          <option value={3}>Rank 3</option>
-          <option value={2}>Rank 2</option>
-          <option value={1}>Rank 1 (Low)</option>
-        </select>
-        <button onClick={addItem} className="border rounded px-3 py-2">Add</button>
-      </div>
+      <form onSubmit={handleSubmit} className="space-y-3 border rounded p-4">
+        <div>
+          <label className="block text-sm mb-1" htmlFor="username">Username</label>
+          <input
+            id="username"
+            name="username"
+            value={form.username}
+            onChange={handleChange}
+            className="w-full border rounded px-3 py-2"
+            placeholder="ex: coolstudent123"
+            required
+          />
+        </div>
 
-      {items.length === 0 ? (
-        <p className="text-sm">No tasks yet.</p>
-      ) : (
-        <ul className="space-y-2">
-          {items.map((it) => (
-            <li key={it.id} className="flex items-center justify-between border rounded p-2">
-              <div className="flex items-center gap-3">
-                <span className="text-xs px-2 py-1 border rounded">Rank {it.rank}</span>
-                <span>{it.text}</span>
-              </div>
-              <button onClick={() => doneItem(it.id)} className="text-sm border rounded px-2 py-1">
-                Done
-              </button>
-            </li>
-          ))}
-        </ul>
+        <div>
+          <label className="block text-sm mb-1" htmlFor="email">Email</label>
+          <input
+            id="email"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+            className="w-full border rounded px-3 py-2"
+            placeholder="you@example.com"
+            type="email"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm mb-1" htmlFor="password">Password</label>
+          <input
+            id="password"
+            name="password"
+            value={form.password}
+            onChange={handleChange}
+            className="w-full border rounded px-3 py-2"
+            placeholder="••••••••"
+            type="password"
+            required
+          />
+        </div>
+
+        <button type="submit" className="border rounded px-4 py-2">Register</button>
+      </form>
+
+      {submitted && (
+        <div className="mt-4">
+          <h2 className="text-lg font-semibold mb-2">Submitted Data</h2>
+          <pre className="text-sm border rounded p-3 overflow-x-auto">
+{JSON.stringify(submitted, null, 2)}
+          </pre>
+        </div>
       )}
     </main>
   );
