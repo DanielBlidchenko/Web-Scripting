@@ -8,6 +8,7 @@ export default function Nav() {
         <li><Link href="/" className="underline">Home</Link></li>
         <li><Link href="/about" className="underline">About</Link></li>
         <li><Link href="/contact" className="underline">Contact</Link></li>
+        <li><Link href="/weather" className="underline">Weather</Link></li>
       </ul>
     </nav>
   );
