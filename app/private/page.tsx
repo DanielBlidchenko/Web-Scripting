@@ -1,7 +1,6 @@
 "use client";
 
 import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react";
-
 export default function PrivatePage() {
   return (
     <main className="p-6">
@@ -22,7 +21,7 @@ function PrivateContent() {
         Logged in as: <span className="font-mono">{user?.username}</span>
       </p>
 
-      <div className="text-lg">This is secret  </div>
+      <div className="text-lg">This is a secret  </div>
 
       <button
         onClick={signOut}
