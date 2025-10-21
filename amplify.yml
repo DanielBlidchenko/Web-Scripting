@@ -11,6 +11,7 @@ frontend:
       commands:
         - npm run build
   artifacts:
+    baseDirectory: .next        # <-- add this line
     files:
       - '**/*'
   cache:
