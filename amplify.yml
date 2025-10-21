@@ -5,6 +5,7 @@ applications:
       variables:
         NODE_VERSION: 20
     frontend:
+      buildpath: .                
       phases:
         preBuild:
           commands:
@@ -13,7 +14,7 @@ applications:
           commands:
             - npm run build
       artifacts:
-        baseDirectory: .next           
+        baseDirectory: .next      
         files:
           - '**/*'
       cache:
