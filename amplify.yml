@@ -1,6 +1,6 @@
 version: 1
 applications:
-  - appRoot: hello-world           
+  - appRoot: hello-world
     env:
       variables:
         NODE_VERSION: 20
@@ -13,7 +13,7 @@ applications:
           commands:
             - npm run build
       artifacts:
-        
+        baseDirectory: .next           
         files:
           - '**/*'
       cache:
