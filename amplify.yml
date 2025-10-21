@@ -1,18 +1,21 @@
 version: 1
-env:
-  variables:
-    NODE_VERSION: 20
-frontend:
-  phases:
-    preBuild:
-      commands:
-        - npm ci
-    build:
-      commands:
-        - npm run build
-  artifacts:
-    files:
-      - '**/*'
-  cache:
-    paths:
-      - node_modules/**/*
+applications:
+  - appRoot: hello-world           
+    env:
+      variables:
+        NODE_VERSION: 20
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - npm ci
+        build:
+          commands:
+            - npm run build
+      artifacts:
+        
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - node_modules/**/*
